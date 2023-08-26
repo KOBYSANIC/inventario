@@ -1,0 +1,9 @@
+@url = http://localhost:8000/api
+
+#post user
+POST {{url}}/users/login/
+Body: 
+{
+  "username": "koby",
+  "password": "123"
+}
