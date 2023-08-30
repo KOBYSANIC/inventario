@@ -64,11 +64,13 @@ class UserViewset(viewsets.ModelViewSet):
                 "message": "Credenciales inválidas"
             }, status=status.HTTP_401_UNAUTHORIZED)
 
-    @action(detail=False, methods=['post'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=['post'], authentication_classes=[], permission_classes=[AllowAny])
     def logout(self, request):
+        print("jajfadfa")
         user = request.user
-        if user.is_authenticated:
-            token = Token.objects.get(user=user)
+        print(user)
+        if user:
+            token = Token.objects.get(user_id=1)
             token.delete()
             logout(request)
             return Response({"message": "Sesión cerrada exitosamente"}, status=status.HTTP_200_OK)

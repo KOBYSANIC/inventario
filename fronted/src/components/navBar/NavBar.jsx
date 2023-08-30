@@ -18,8 +18,8 @@ function navBar() {
   return (
     <nav className="bg-backgroundDark text-secondary flex flex-wrap justify-between items-center p-6">
       <div className="flex justify-between items-center mr-6">
-        <UseSvgLoader name="logo" options={{ width: "48px", height: "48px" }} />
-        <span className="font-semibold text-xl tracking-tight">BuscoSexo</span>
+       {/* <UseSvgLoader name="logo" options={{ width: "48px", height: "48px" }} /> */}
+        <span className="font-semibold text-xl tracking-tight">Inventario</span>
       </div>
       <div className="block lg:hidden">
         <button className="flex items-center px-3 py-2" onClick={handleToggle}>

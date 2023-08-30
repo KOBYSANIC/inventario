@@ -8,6 +8,8 @@ import { InterfaceContext } from "../context/Interface";
 
 // react
 import { useContext } from "react";
+import useTokenLocalStorage from "../hooks/user/useTokenLocalStorage ";
+import { logoutUser } from "../services/user";
 
 function Home() {
   const { user } = useContext(UserContext);
@@ -17,8 +19,15 @@ function Home() {
   if (!user) {
     return <>{showLogin ? <Signin /> : <Signup />}</>;
   }
+  const { getToken } = useTokenLocalStorage("userToken");
 
-  return <div>Home - public</div>;
+  const handleFormSubmit = () => {
+    const token = getToken();
+    logoutUser(token);
+  };
+  return <div>Home - public
+    <button onClick={handleFormSubmit}>Cerrar Sesión</button>
+  </div>;
 }
 
 export default Home;

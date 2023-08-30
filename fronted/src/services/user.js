@@ -22,6 +22,7 @@ export const loginUser = async (data) => {
 };
 
 export const logoutUser = async (userToken) => {
+  console.log(userToken)
   try {
     const response = await axios.post(
       `${urlUsers}logout/`,
