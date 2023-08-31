@@ -19,6 +19,7 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const LinkItems = [
   { name: 'Home'},
@@ -46,11 +47,20 @@ const SidebarContent = ({data, onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {data.map((link) => (
-        <NavItem key={link.nombre_opcion}>
-          <a href={link.link}>{link.nombre_opcion}</a>
+        <Link to={link.link} key={link.nombre_opcion}>
+        <NavItem>
+          {link.nombre_opcion}
         </NavItem>
+        </Link>
       ))}
+      <Box pos="absolute" bottom="4" w="100%">
+        <Link to="/agregar_menu">
+        {/* Static NavItem */}
+        <NavItem>Agregar menu</NavItem>
+        </Link>
+      </Box>
     </Box>
+    
   );
 };
 
@@ -161,7 +171,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
 const SidebarWithHeader = ({data, children}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent data={data} onClose={onClose} display={{ base: 'none', md: 'block' }} />

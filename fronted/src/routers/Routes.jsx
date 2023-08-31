@@ -11,6 +11,7 @@ import Post from "../pages/Post";
 import Account from "../pages/Account";
 import { useEffect, useState } from "react";
 import { getMenu } from "../services/menu";
+import MenuForm from "../components/form/menu/MenuForm";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -25,6 +26,7 @@ function Rutas() {
 
     getResponse()
   }, [])
+  console.log(data)
   return (
     <Routes>
      <Route index element={<Home />} />
@@ -34,6 +36,7 @@ function Rutas() {
       <Route path="/proveedores" element={<SidebarWithHeader data={data}><h1>Proveedores</h1></SidebarWithHeader>} />
       <Route path="/compras" element={<SidebarWithHeader data={data}><h1>Compras</h1></SidebarWithHeader>} />
       <Route path="/detalle_compra" element={<SidebarWithHeader data={data}><h1>Detalle Compra</h1></SidebarWithHeader>} />
+      <Route path="/Agregar_menu" element={<SidebarWithHeader data={data}><MenuForm/></SidebarWithHeader>} />
       <Route element={<ProtectedRoute />}>
         <Route path="/post" element={<Post />} />
        

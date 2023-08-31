@@ -18,3 +18,13 @@ export const getMenu = async (data) => {
     throw e.response;
   }
 };
+
+export const createdMenu = async (data) => {
+  try {
+    const response = await axios.post(urlMenu, data);
+    const createdMenu = response.data;
+    return createdMenu;
+  } catch (e) {
+    throw e.response;
+  }
+};
