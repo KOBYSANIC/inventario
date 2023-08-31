@@ -13,4 +13,4 @@ class MenuViewset(viewsets.ModelViewSet):
     queryset = MenuModel.objects.all()
     serializer_class = MenuSerializer
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]

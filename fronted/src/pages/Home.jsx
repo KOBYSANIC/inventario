@@ -7,9 +7,11 @@ import { UserContext } from "../context/User";
 import { InterfaceContext } from "../context/Interface";
 
 // react
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import useTokenLocalStorage from "../hooks/user/useTokenLocalStorage ";
 import { logoutUser } from "../services/user";
+import SidebarWithHeader from "../components/sideBar/SideBar";
+import { getMenu } from "../services/menu";
 
 function Home() {
   const { user } = useContext(UserContext);
@@ -21,13 +23,20 @@ function Home() {
   }
   const { getToken } = useTokenLocalStorage("userToken");
 
-  const handleFormSubmit = () => {
-    const token = getToken();
-    logoutUser(token);
-  };
-  return <div>Home - public
-    <button onClick={handleFormSubmit}>Cerrar Sesión</button>
-  </div>;
+ 
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+
+    const getResponse = async () => {
+      const date = await getMenu()
+      setData(date)
+    }
+
+    getResponse()
+  }, [])
+  
+  return (<SidebarWithHeader data={data}/>)
 }
 
 export default Home;
