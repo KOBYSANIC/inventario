@@ -21,14 +21,6 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const LinkItems = [
-  { name: 'Home'},
-  { name: 'Trending'},
-  { name: 'Explore'},
-  { name: 'Favourites'},
-  { name: 'Settings'},
-];
-
 const SidebarContent = ({data, onClose, ...rest }) => {
   return (
     <Box
@@ -46,8 +38,8 @@ const SidebarContent = ({data, onClose, ...rest }) => {
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {data.map((link) => (
-        <Link to={link.link} key={link.nombre_opcion}>
+      {data.map((link, index) => (
+        <Link to={link.link} key={index}>
         <NavItem>
           {link.nombre_opcion}
         </NavItem>
@@ -56,7 +48,7 @@ const SidebarContent = ({data, onClose, ...rest }) => {
       <Box pos="absolute" bottom="4" w="100%">
         <Link to="/agregar_menu">
         {/* Static NavItem */}
-        <NavItem>Agregar menu</NavItem>
+        <NavItem>Administrar menu</NavItem>
         </Link>
       </Box>
     </Box>

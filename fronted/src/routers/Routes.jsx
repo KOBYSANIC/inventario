@@ -26,7 +26,6 @@ function Rutas() {
 
     getResponse()
   }, [])
-  console.log(data)
   return (
     <Routes>
      <Route index element={<Home />} />

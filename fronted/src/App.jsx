@@ -1,9 +1,9 @@
 // libraries
 import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 // pages
 import Rutas from "./routers/Routes";
-import Navbar from "./components/navBar/NavBar";
 
 // context
 import { UserContextProvider } from "./context/User";
@@ -16,6 +16,7 @@ function App() {
       <UserContextProvider>
         <InterfaceContextProvider>
           <BrowserRouter>
+            <Toaster />
             {/* <Navbar /> */}
             <Rutas />
           </BrowserRouter>
