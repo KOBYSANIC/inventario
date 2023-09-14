@@ -94,9 +94,9 @@ function Signin() {
                 align={"start"}
                 justify={"space-between"}
               >
-                <button onClick={toggleForm}>
+                <div onClick={toggleForm}>
                   <Text color={"blue.500"}>Registrarse</Text>
-                </button>
+                </div>
               </Stack>
               <Button type="submit" colorScheme={"blue"} variant={"solid"}>
                 Iniciar Sesión

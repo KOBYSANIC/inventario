@@ -17,6 +17,7 @@ from api.serializers import UserSerializer
 
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from api.models import UserProfile
 
 class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -28,18 +29,39 @@ class UserViewset(viewsets.ModelViewSet):
     def create_user(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            # Obtén los datos del usuario del serializer
+            user_data = serializer.validated_data
+            
+            # Crea un nuevo usuario, pero NO guardes la contraseña en texto plano
+            user = User(
+                username=user_data['username'],
+                email=user_data['email'],
+            )
+
+            # Encripta la contraseña utilizando set_password
+            user.set_password(user_data['password'])
+            user.save()
+
+            # Genera un token
             token, _ = Token.objects.get_or_create(user=user)
+            
+            # Inicia sesión al usuario
             login(request, user)
+
+            create_user_profile = UserProfile.objects.create(
+                user=user,
+                reference_rol_id=1
+            )
+
             response_data = {
                 "message": "Usuario creado exitosamente",
                 "token": token.key,
                 "user": serializer.data,
-
             }
             return Response(response_data, status=201)
         return Response(serializer.errors, status=400)
 
+    # login
     @action(detail=False, methods=['post'], authentication_classes=[], permission_classes=[AllowAny])
     def login(self, request):
         username = request.data.get('username')
@@ -50,7 +72,7 @@ class UserViewset(viewsets.ModelViewSet):
                 "message": "Por favor, proporciona nombre de usuario y contraseña"
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             token, _ = Token.objects.get_or_create(user=user)
@@ -64,15 +86,16 @@ class UserViewset(viewsets.ModelViewSet):
                 "message": "Credenciales inválidas"
             }, status=status.HTTP_401_UNAUTHORIZED)
 
-    @action(detail=False, methods=['post'], authentication_classes=[], permission_classes=[AllowAny])
+    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
     def logout(self, request):
-        print("jajfadfa")
         user = request.user
-        print(user)
-        if user:
-            token = Token.objects.get(user_id=1)
-            token.delete()
+        if user.is_authenticated:
+            # Elimina el token de autenticación del usuario actual
+            Token.objects.filter(user=user).delete()
+            
+            # Cierra la sesión del usuario
             logout(request)
+            
             return Response({"message": "Sesión cerrada exitosamente"}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "No se encontró ninguna sesión activa"}, status=status.HTTP_400_BAD_REQUEST)

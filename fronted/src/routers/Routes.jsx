@@ -15,43 +15,85 @@ import MenuForm from "../components/form/menu/MenuForm";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-
     const getResponse = async () => {
-      const date = await getMenu()
-      setData(date)
-    }
+      const date = await getMenu();
+      setData(date);
+    };
 
-    getResponse()
-  }, [])
+    getResponse();
+  }, []);
   return (
     <Routes>
-     <Route index element={<Home />} />
-      <Route path="/inicio" element={<Home />} />
-      <Route path="/inventario" element={<SidebarWithHeader data={data}><h1>Inventario</h1></SidebarWithHeader>} />
-      <Route path="/productos" element={<SidebarWithHeader data={data}><h1>Productos</h1></SidebarWithHeader>} />
-      <Route path="/proveedores" element={<SidebarWithHeader data={data}><h1>Proveedores</h1></SidebarWithHeader>} />
-      <Route path="/compras" element={<SidebarWithHeader data={data}><h1>Compras</h1></SidebarWithHeader>} />
-      <Route path="/detalle_compra" element={<SidebarWithHeader data={data}><h1>Detalle Compra</h1></SidebarWithHeader>} />
-      <Route path="/Agregar_menu" element={<SidebarWithHeader data={data}><MenuForm/></SidebarWithHeader>} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/post" element={<Post />} />
-       
-      </Route>
+      <Route index element={<Home />} />
 
-      {/* <Route
-        path="/dashboard"
+      {/* rutas protegidas */}
+      <Route
+        path="/proveedores"
         element={
-          <ProtectedRoute
-            isAllowed={!!user && user.permissions.includes("admin")}
-            redirectTo="/account"
-          >
-            <Dashboard />
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader data={data}>
+              <h1>Proveedores</h1>
+            </SidebarWithHeader>
           </ProtectedRoute>
         }
-      /> */}
+      />
+      <Route
+        path="/compras"
+        element={
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader data={data}>
+              <h1>Compras</h1>
+            </SidebarWithHeader>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/detalle_compra"
+        element={
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader data={data}>
+              <h1>Detalle Compra</h1>
+            </SidebarWithHeader>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/Agregar_menu"
+        element={
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader data={data}>
+              <MenuForm />
+            </SidebarWithHeader>
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/account" element={<Account />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/post" element={<Post />} />
+      </Route>
+      <Route
+        path="/inventario"
+        element={
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader data={data}>
+              <h1>Inventario</h1>
+            </SidebarWithHeader>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/productos"
+        element={
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader data={data}>
+              <h1>Productos</h1>
+            </SidebarWithHeader>
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

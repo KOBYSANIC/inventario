@@ -6,11 +6,14 @@ import { UserContext } from "../../context/User";
 
 // react
 import { useContext } from "react";
+import useTokenLocalStorage from "../../hooks/user/useTokenLocalStorage ";
 
-function ProtectedRoute({ children, isAllowed, redirectTo = "/home" }) {
-  const { user } = useContext(UserContext);
+function ProtectedRoute({ children, redirectTo = "/" }) {
+  const { getToken } = useTokenLocalStorage("userToken");
 
-  if (!user) {
+  const token = getToken();
+
+  if (!token) {
     return <Navigate to={redirectTo} />;
   }
   return children ? children : <Outlet />;
