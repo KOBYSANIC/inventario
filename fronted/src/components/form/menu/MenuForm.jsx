@@ -67,7 +67,7 @@ function MenuForm() {
     getResponse();
   };
 
-  useEffect(() => {
+  useEffect(() => { //trae todo de la base de datos
     getResponse();
   }, []);
 
@@ -134,7 +134,7 @@ function MenuForm() {
           handleFormSubmit,
         }}
         modal={{
-          title: "Agregar Menu",
+          title: isUpdate == true ? "Actualizar Menu" : "Agregar Menu",
           isOpen,
           onOpen,
           onClose,
