@@ -11,7 +11,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-export default function Form({ formData, schema, handleFormSubmit }) {
+export default function Form({ formData, schema, handleFormSubmit, children }) {
   const {
     register,
     handleSubmit,
@@ -32,6 +32,7 @@ export default function Form({ formData, schema, handleFormSubmit }) {
           </div>
         );
       })}
+      {children}
       <Stack spacing={6} mt="20px">
         <Button
           bg={"blue.400"}

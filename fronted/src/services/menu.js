@@ -5,16 +5,15 @@ const urlMenu = "http://localhost:8000/api/menu/";
 
 export const getMenu = async (data) => {
   const { getToken } = useTokenLocalStorage("userToken");
+
+  const token = getToken();
+
   try {
-    const response = await axios.get(
-      `${urlMenu}`,
-      {},
-      {
-        headers: {
-          Authorization: `Token ${getToken}`,
-        },
-      }
-    );
+    const response = await axios.get(`${urlMenu}`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
 
     const dataMenu = response.data;
     return dataMenu;

@@ -1,6 +1,13 @@
 // libraries
 import * as yup from "yup";
-import { Button, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  Stack,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 // services
 import {
@@ -56,10 +63,28 @@ function MenuForm() {
     setData(date);
   };
 
+  // check box fucntions
+  const [checkboxValues, setCheckboxValues] = useState({
+    myCheckbox: false,
+    myCheckbox2: false,
+  });
+
   const handleFormSubmit = async (dataForm) => {
-    isUpdate ? await onSubmit({id:idMenu,data:dataForm}) : await onSubmit(dataForm);
+    const formDataToSend = {
+      ...dataForm,
+      admin: checkboxValues["1"], // Usar "1" como nombre de checkbox
+      vendedor: checkboxValues["2"], // Usar "2" como nombre de checkbox
+    };
+
+    isUpdate
+      ? await onSubmit({ id: idMenu, data: formDataToSend })
+      : await onSubmit(formDataToSend);
     getResponse();
     onClose();
+    setCheckboxValues({
+      myCheckbox: false,
+      myCheckbox2: false,
+    });
   };
 
   const handleDelete = async (id) => {
@@ -67,10 +92,19 @@ function MenuForm() {
     getResponse();
   };
 
-  useEffect(() => { //trae todo de la base de datos
+  useEffect(() => {
+    //trae todo de la base de datos
     getResponse();
   }, []);
 
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+
+    setCheckboxValues({
+      ...checkboxValues,
+      [name]: checked,
+    });
+  };
   const columns = [
     {
       Header: " ",
@@ -140,7 +174,29 @@ function MenuForm() {
           onClose,
           setisUpdate,
         }}
-      />
+      >
+        <FormLabel>Rol</FormLabel>
+        <Stack spacing={5} direction="row">
+          <FormControl>
+            <Checkbox
+              onChange={handleCheckboxChange}
+              colorScheme="red"
+              name="1"
+            >
+              Administrador
+            </Checkbox>
+          </FormControl>
+          <FormControl>
+            <Checkbox
+              onChange={handleCheckboxChange}
+              name="2"
+              colorScheme="green"
+            >
+              Vendedor
+            </Checkbox>
+          </FormControl>
+        </Stack>
+      </ContainerComponent>
     </>
   );
 }
