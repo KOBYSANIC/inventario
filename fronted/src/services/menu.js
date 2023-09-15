@@ -3,18 +3,17 @@ import useTokenLocalStorage from "../hooks/user/useTokenLocalStorage ";
 import { toast } from "react-hot-toast";
 const urlMenu = "http://localhost:8000/api/menu/";
 
-export const getMenu = async (data) => {
-  const { getToken } = useTokenLocalStorage("userToken");
+const { getToken } = useTokenLocalStorage("userToken");
 
-  const token = getToken();
+const token = getToken();
 
+export const getMenu = async () => {
   try {
     const response = await axios.get(`${urlMenu}`, {
       headers: {
         Authorization: `Token ${token}`,
       },
     });
-
     const dataMenu = response.data;
     return dataMenu;
   } catch (e) {
@@ -24,7 +23,11 @@ export const getMenu = async (data) => {
 
 export const createdMenu = async (data) => {
   try {
-    const response = await axios.post(urlMenu, data);
+    const response = await axios.post(urlMenu, data, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
     const createdMenu = response.data;
     toast.success("Menu creado con exito");
     return createdMenu;
@@ -36,7 +39,11 @@ export const createdMenu = async (data) => {
 
 export const deleteMenu = async (id) => {
   try {
-    const response = await axios.delete(`${urlMenu}${id}/`);
+    const response = await axios.delete(`${urlMenu}${id}/`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
     const deletedMenu = response.data;
     toast.success("Menu eliminado con exito");
     return deletedMenu;
@@ -48,7 +55,11 @@ export const deleteMenu = async (id) => {
 
 export const updateMenu = async (data) => {
   try {
-    const response = await axios.put(`${urlMenu}${data.id}/`, data.data);
+    const response = await axios.put(`${urlMenu}${data.id}/`, data.data, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
     const updatedMenu = response.data;
     toast.success(`Menu ${data.id} actualizado con exito`);
     return updatedMenu;

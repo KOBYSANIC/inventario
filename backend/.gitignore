@@ -1,0 +1,34 @@
+*.sqlite3
+
+# Ignorar archivos y directorios generados por el sistema operativo y el IDE
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+.DS_Store
+*.bak
+*.tmp
+
+# Ignorar archivos y directorios generados por Django
+*.sqlite3
+*.db
+*.db-journal
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.cache/
+*.egg-info/
+__pycache__/
+
+# Ignorar archivos de configuración específicos de desarrollo
+*.settings.local.py
+*.settings.production.py
+
+# Ignorar archivos generados por herramientas de administración de paquetes
+venv/
+__venv__/
+env/
+/bin/
+/pip-selfcheck.json

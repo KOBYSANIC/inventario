@@ -63,6 +63,8 @@ function MenuForm() {
     setData(date);
   };
 
+  console.log(data, "data");
+
   // check box fucntions
   const [checkboxValues, setCheckboxValues] = useState({
     myCheckbox: false,

@@ -1,5 +1,5 @@
 // Libraries
-import { Routes, Route, redirect } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // components
 import ProtectedRoute from "../components/routes/ProtectedRoute";
@@ -9,22 +9,10 @@ import SidebarWithHeader from "../components/sideBar/SideBar";
 import Home from "../pages/Home";
 import Post from "../pages/Post";
 import Account from "../pages/Account";
-import { useEffect, useState } from "react";
-import { getMenu } from "../services/menu";
 import MenuForm from "../components/form/menu/MenuForm";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const getResponse = async () => {
-      const date = await getMenu();
-      setData(date);
-    };
-
-    getResponse();
-  }, []);
   return (
     <Routes>
       <Route index element={<Home />} />
@@ -34,7 +22,7 @@ function Rutas() {
         path="/proveedores"
         element={
           <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader data={data}>
+            <SidebarWithHeader>
               <h1>Proveedores</h1>
             </SidebarWithHeader>
           </ProtectedRoute>
@@ -44,7 +32,7 @@ function Rutas() {
         path="/compras"
         element={
           <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader data={data}>
+            <SidebarWithHeader>
               <h1>Compras</h1>
             </SidebarWithHeader>
           </ProtectedRoute>
@@ -54,7 +42,7 @@ function Rutas() {
         path="/detalle_compra"
         element={
           <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader data={data}>
+            <SidebarWithHeader>
               <h1>Detalle Compra</h1>
             </SidebarWithHeader>
           </ProtectedRoute>
@@ -64,7 +52,7 @@ function Rutas() {
         path="/Agregar_menu"
         element={
           <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader data={data}>
+            <SidebarWithHeader>
               <MenuForm />
             </SidebarWithHeader>
           </ProtectedRoute>
@@ -78,7 +66,7 @@ function Rutas() {
         path="/inventario"
         element={
           <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader data={data}>
+            <SidebarWithHeader>
               <h1>Inventario</h1>
             </SidebarWithHeader>
           </ProtectedRoute>
@@ -88,7 +76,7 @@ function Rutas() {
         path="/productos"
         element={
           <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader data={data}>
+            <SidebarWithHeader>
               <h1>Productos</h1>
             </SidebarWithHeader>
           </ProtectedRoute>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   IconButton,
   Avatar,
@@ -23,7 +23,8 @@ import { Link } from "react-router-dom";
 import useSubmitForm from "../../hooks/user/onSubmit";
 import { logoutUser } from "../../services/user";
 import useTokenLocalStorage from "../../hooks/user/useTokenLocalStorage ";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { getMenu } from "../../services/menu";
 
 const SidebarContent = ({ data, onClose, ...rest }) => {
   return (
@@ -99,14 +100,13 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const { error, onSubmit } = useSubmitForm(logoutUser);
   const { getToken } = useTokenLocalStorage("userToken");
   const navigate = useNavigate();
-  
+
   const handleFormSubmit = () => {
     const token = getToken();
     onSubmit(token, "logout").then((response) => {
       console.log("hola");
-        navigate('/');
+      navigate("/");
     });
-
   };
 
   return (
@@ -184,7 +184,20 @@ const MobileNav = ({ onOpen, ...rest }) => {
   );
 };
 
-const SidebarWithHeader = ({ data, children }) => {
+const SidebarWithHeader = ({ children }) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getResponse = async () => {
+      const date = await getMenu();
+      setData(date);
+    };
+
+    getResponse();
+  }, []);
+
+  console.log(data, "data alala");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
