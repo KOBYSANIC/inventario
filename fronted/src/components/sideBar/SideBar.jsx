@@ -49,12 +49,11 @@ const SidebarContent = ({ data, onClose, ...rest }) => {
           <NavItem>{link.nombre_opcion}</NavItem>
         </Link>
       ))}
-      <Box pos="absolute" bottom="4" w="100%">
+      {/* <Box pos="absolute" bottom="4" w="100%">
         <Link to="/agregar_menu">
-          {/* Static NavItem */}
           <NavItem>Administrar menu</NavItem>
         </Link>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

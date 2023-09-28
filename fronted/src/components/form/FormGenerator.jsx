@@ -1,3 +1,6 @@
+//estilos
+import "./FormGenerator.css";
+
 // Libraries
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,24 +27,33 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <h2>{headers.title}</h2>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="form-generator">
+      <h2 className="form-title">{headers.title}</h2>
       {formData.map((input) => {
         return (
-          <div key={input.name}>
-            <label htmlFor={input.name}>{input.label}</label>
-            <input {...register(input.name)} type={input.type} />
-            <p>{errors[input.name]?.message}</p>
+          <div key={input.name} className="form-field">
+            <label htmlFor={input.name} className="form-label">
+              {input.label}
+            </label>
+            <input
+              {...register(input.name)}
+              type={input.type}
+              className="form-input"
+            />
+            <p className="form-error">{errors[input.name]?.message}</p>
           </div>
         );
       })}
-      <input type="submit" />
-      <p>
+      <input type="submit" className="form-submit-button" value="Registrar" />
+      <p className="form-message">
         {headers.message}
-        <button onClick={toggleForm}>Sign Up</button>
+        <button onClick={toggleForm} className="form-sign-up-button">
+          Ingresar
+        </button>
       </p>
     </form>
   );
 }
-
 export default FormGenerator;
+
+

@@ -24,32 +24,32 @@ const formData = [
   {
     type: "text",
     name: "first_name",
-    label: "First Name",
+    label: "Nombres",
   },
   {
     type: "text",
     name: "last_name",
-    label: "Last Name",
+    label: "Apellidos",
   },
   {
     type: "email",
     name: "email",
-    label: "Email",
+    label: "Correo electrónico",
   },
   {
     type: "text",
     name: "username",
-    label: "Username",
+    label: "Nombre del usuario",
   },
   {
     type: "password",
     name: "password",
-    label: "Password",
+    label: "Contraseña",
   },
 ];
 
 const headers = {
-  title: "Sign Up",
+  title: "Registro de datos",
   message: "¿Tienes una cuenta?",
 };
 
