@@ -100,10 +100,12 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const { getToken } = useTokenLocalStorage("userToken");
   const navigate = useNavigate();
 
+  const userName = localStorage.getItem("userName");
+  const rolUser = localStorage.getItem("roleUser");
+
   const handleFormSubmit = () => {
     const token = getToken();
     onSubmit(token, "logout").then((response) => {
-      console.log("hola");
       navigate("/");
     });
   };
@@ -158,9 +160,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Koby Saníc</Text>
+                  <Text fontSize="sm">{userName}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {rolUser}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}></Box>
@@ -194,8 +196,6 @@ const SidebarWithHeader = ({ children }) => {
 
     getResponse();
   }, []);
-
-  console.log(data, "data alala");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 

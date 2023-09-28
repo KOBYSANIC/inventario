@@ -95,7 +95,9 @@ function Signin() {
                 justify={"space-between"}
               >
                 <div onClick={toggleForm}>
-                  <Text color={"blue.500"}>Registrarse</Text>
+                  <Text cursor={"pointer"} color={"blue.500"}>
+                    Registrarse
+                  </Text>
                 </div>
               </Stack>
               <Button type="submit" colorScheme={"blue"} variant={"solid"}>

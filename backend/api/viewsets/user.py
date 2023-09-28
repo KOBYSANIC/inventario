@@ -16,6 +16,7 @@ from api.serializers import UserSerializer
 # models
 
 from django.contrib.auth.models import User
+from api.models import UserProfile
 from rest_framework.authtoken.models import Token
 from api.models import UserProfile
 
@@ -53,10 +54,18 @@ class UserViewset(viewsets.ModelViewSet):
                 reference_rol_id=1
             )
 
+            user_role = UserProfile.objects.filter(user=user).values('reference_rol__nombre_rol')
+            try:
+                user_role = user_role[0].get('reference_rol__nombre_rol')
+            except:
+                user_role = "Sin Rol"
+
+
             response_data = {
                 "message": "Usuario creado exitosamente",
                 "token": token.key,
                 "user": serializer.data,
+                "user_role": user_role,
             }
             return Response(response_data, status=201)
         return Response(serializer.errors, status=400)
@@ -73,6 +82,14 @@ class UserViewset(viewsets.ModelViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         user = authenticate(request, username=username, password=password)
+
+        user_role = UserProfile.objects.filter(user=user).values('reference_rol__nombre_rol')
+
+        try:
+            user_role = user_role[0].get('reference_rol__nombre_rol')
+        except:
+            user_role = "Sin Rol"
+
         if user is not None:
             login(request, user)
             token, _ = Token.objects.get_or_create(user=user)
@@ -80,6 +97,7 @@ class UserViewset(viewsets.ModelViewSet):
                 "message": "Inicio de sesión exitoso",
                 "token": token.key,
                 "user": UserSerializer(user).data,
+                "user_role": user_role,
             }, status=status.HTTP_200_OK)
         else:
             return Response({

@@ -12,7 +12,7 @@ import useSubmitForm from "../../../hooks/user/onSubmit";
 
 const schema = yup
   .object({
-    first_name: yup.string().required(),
+    first_name: yup.string().required("Los nombres son requeridos"),
     last_name: yup.string().required(),
     email: yup.string().email().required(),
     username: yup.string().required(),
