@@ -13,10 +13,10 @@ import useSubmitForm from "../../../hooks/user/onSubmit";
 const schema = yup
   .object({
     first_name: yup.string().required("Los nombres son requeridos"),
-    last_name: yup.string().required(),
-    email: yup.string().email().required(),
-    username: yup.string().required(),
-    password: yup.string().min(6).required(),
+    last_name: yup.string().required("Los apellidos son requeridos"),
+    email: yup.string().email().required("El correo es requerido"),
+    username: yup.string().required("El nombre de usuario es requerida"),
+    password: yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es requerida"),
   })
   .required();
 
