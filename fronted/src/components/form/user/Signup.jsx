@@ -9,6 +9,7 @@ import FormGenerator from "../FormGenerator";
 
 // hooks
 import useSubmitForm from "../../../hooks/user/onSubmit";
+import { Checkbox, FormLabel, Stack } from "@chakra-ui/react";
 
 const schema = yup
   .object({
@@ -16,7 +17,10 @@ const schema = yup
     last_name: yup.string().required("Los apellidos son requeridos"),
     email: yup.string().email().required("El correo es requerido"),
     username: yup.string().required("El nombre de usuario es requerida"),
-    password: yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es requerida"),
+    password: yup
+      .string()
+      .min(6, "La contraseña debe tener al menos 6 caracteres")
+      .required("La contraseña es requerida"),
   })
   .required();
 
@@ -45,6 +49,15 @@ const formData = [
     type: "password",
     name: "password",
     label: "Contraseña",
+  },
+  {
+    type: "select",
+    name: "rol_user",
+    label: "Rol",
+    options: [
+      { value: "1", label: "Administrador" },
+      { value: "2", label: "Vendedor" },
+    ],
   },
 ];
 

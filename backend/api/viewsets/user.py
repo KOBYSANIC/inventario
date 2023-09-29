@@ -29,6 +29,7 @@ class UserViewset(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], authentication_classes=[], permission_classes=[AllowAny])
     def create_user(self, request):
         serializer = UserSerializer(data=request.data)
+        rol_user = request.data.get('rol_user', 2)
         if serializer.is_valid():
             # Obtén los datos del usuario del serializer
             user_data = serializer.validated_data
@@ -51,7 +52,7 @@ class UserViewset(viewsets.ModelViewSet):
 
             create_user_profile = UserProfile.objects.create(
                 user=user,
-                reference_rol_id=1
+                reference_rol_id=rol_user
             )
 
             user_role = UserProfile.objects.filter(user=user).values('reference_rol__nombre_rol')

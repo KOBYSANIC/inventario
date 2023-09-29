@@ -2,7 +2,7 @@
 import "./FormGenerator.css";
 
 // Libraries
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // context
@@ -17,6 +17,7 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -26,6 +27,12 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
     setShowLogin(!showLogin);
   };
 
+  const opcionesFrutas = [
+    { value: "manzana", label: "Manzana" },
+    { value: "banana", label: "Banana" },
+    { value: "naranja", label: "Naranja" },
+    { value: "fresa", label: "Fresa" },
+  ];
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="form-generator">
       <h2 className="form-title">{headers.title}</h2>
@@ -35,11 +42,32 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
             <label htmlFor={input.name} className="form-label">
               {input.label}
             </label>
-            <input
-              {...register(input.name)}
-              type={input.type}
-              className="form-input"
-            />
+            {input.type === "select" ? (
+              <Controller
+                name={input.name} // Nombre del campo en los datos del formulario
+                control={control} // Proporciona el controlador de React Hook Form
+                defaultValue="1" // Valor por defecto
+                rules={{ required: "Este campo es obligatorio" }} // Reglas de validación
+                render={({ field }) => (
+                  <select id={input.name} {...field}>
+                    {input.options.map((opcion) => {
+                      return (
+                        <option key={opcion.value} value={opcion.value}>
+                          {opcion.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                )}
+              />
+            ) : (
+              <input
+                {...register(input.name)}
+                type={input.type}
+                className="form-input"
+              />
+            )}
+
             <p className="form-error">{errors[input.name]?.message}</p>
           </div>
         );
@@ -55,5 +83,3 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
   );
 }
 export default FormGenerator;
-
-
