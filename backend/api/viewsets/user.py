@@ -38,6 +38,8 @@ class UserViewset(viewsets.ModelViewSet):
             user = User(
                 username=user_data['username'],
                 email=user_data['email'],
+                first_name=user_data['first_name'],
+                last_name=user_data['last_name'],
             )
 
             # Encripta la contraseña utilizando set_password
