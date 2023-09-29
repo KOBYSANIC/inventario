@@ -19,8 +19,13 @@ const schema = yup
     username: yup.string().required("El nombre de usuario es requerida"),
     password: yup
       .string()
-      .min(6, "La contraseña debe tener al menos 6 caracteres")
-      .required("La contraseña es requerida"),
+      .required("La contraseña es requerida")
+      .test(
+        'no-spaces',
+        'La contraseña no debe contener espacios en blanco',
+        (value) => !/\s/.test(value)
+      )
+      .min(6, "La contraseña debe tener al menos 6 caracteres"),
   })
   .required();
 
