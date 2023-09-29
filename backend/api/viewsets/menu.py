@@ -46,6 +46,48 @@ class MenuViewset(viewsets.ModelViewSet):
         except:
             return Response([], status=status.HTTP_400_BAD_REQUEST)
         
+    def update(self, request, pk, *args, **kwargs):
+        try:
+            data = request.data
+            admin = data.get("admin", False)
+            vendedor = data.get("vendedor", False)
+
+            # Obtén el menú que estás actualizando usando el pk proporcionado en la URL
+            menu = MenuModel.objects.get(pk=pk)
+
+            # Actualiza los campos del menú
+            menu.nombre_opcion = data.get("nombre_opcion")
+            menu.link = data.get("link")
+            menu.save()
+
+            if admin:
+                RolMenuModel.objects.get_or_create(
+                    menu=menu,
+                    rol_id=1,
+                )
+            else:
+                RolMenuModel.objects.filter(
+                    menu=menu,
+                    rol_id=1,
+                ).delete()
+                
+            if vendedor:
+                RolMenuModel.objects.get_or_create(
+                    menu=menu,
+                    rol_id=2,
+                )
+            else:
+                RolMenuModel.objects.filter(
+                    menu=menu,
+                    rol_id=2,
+                ).delete()
+                
+            return Response([], status=status.HTTP_201_CREATED)
+        except MenuModel.DoesNotExist:
+            return Response({"error": "El menú no existe."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
     def list(self, request, *args, **kwargs):
         user = request.user
 
