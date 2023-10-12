@@ -99,6 +99,14 @@ DATABASES = {
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
+    },
+        'DB_ORACLE': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'xe',
+        'USER': 'ADMIN_DBA',
+        'PASSWORD': 'ADMIN_DBA',
+        'HOST': 'localhost',
+        'PORT': '1521',
     }
 }
 
