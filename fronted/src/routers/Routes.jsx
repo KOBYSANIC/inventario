@@ -10,6 +10,7 @@ import Home from "../pages/Home";
 import Post from "../pages/Post";
 import Account from "../pages/Account";
 import MenuForm from "../components/form/menu/MenuForm";
+import CompraForm from "../components/form/compra/CompraForm";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -33,7 +34,7 @@ function Rutas() {
         element={
           <ProtectedRoute redirectTo="/">
             <SidebarWithHeader>
-              <h1>Compras</h1>
+              <CompraForm/>
             </SidebarWithHeader>
           </ProtectedRoute>
         }
