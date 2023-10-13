@@ -6,14 +6,17 @@ import {
   Heading,
   Input,
   Stack,
+  Select,
+  Option,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 export default function Form({ formData, schema, handleFormSubmit, children }) {
   const {
-    register,
+    register, 
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -26,7 +29,30 @@ export default function Form({ formData, schema, handleFormSubmit, children }) {
           <div key={input.name}>
             <FormControl>
               <FormLabel>{input.label}</FormLabel>
-              <Input {...register(input.name)} type={input.type} />
+              {input.type === "select" ? (
+              <Controller
+                name={input.name} // Nombre del campo en los datos del formulario
+                control={control} // Proporciona el controlador de React Hook Form
+                defaultValue="1" // Valor por defecto
+                rules={{ required: "Este campo es obligatorio" }} // Reglas de validación
+                render={({ field }) => (
+                  <Select id={input.name} {...field}>
+                    {input.options.map((opcion) => {
+                      return (
+                        <Option key={opcion.value} value={opcion.value}>
+                          {opcion.label}
+                        </Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              />
+            ) : (
+              <Input
+                {...register(input.name)}
+                type={input.type}
+              />
+            )}
               <p style={{ color: "red" }}>{errors[input.name]?.message}</p>
             </FormControl>
           </div>

@@ -118,7 +118,9 @@ class Ventas(models.Model):
     clienteid = models.ForeignKey(Clientes, models.DO_NOTHING, db_column='clienteid', blank=True, null=True)
     fechaventa = models.DateField(blank=True, null=True)
     totalventa = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    anulado = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'ventas'
+

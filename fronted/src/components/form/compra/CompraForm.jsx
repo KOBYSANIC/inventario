@@ -3,6 +3,7 @@ import * as yup from "yup";
 import {
   Button,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 
 // services
@@ -17,7 +18,7 @@ import ContainerComponent from "../../container/ContainerComponent";
 // hooks
 import useSubmitForm from "../../../hooks/user/onSubmit";
 import { useEffect, useState } from "react";
-import { createdCompras, getCompras } from "../../../services/compras";
+import { createdCompras, deleteCompras, getCompras } from "../../../services/compras";
 
 const schema = yup
   .object({
@@ -27,6 +28,15 @@ const schema = yup
   .required();
 
 const formData = [
+  {
+    type: "select",
+    name: "clienteid",
+    label: "Seleccionar cliente",
+    options: [
+      { value: "1", label: "Administrador" },
+      { value: "2", label: "Vendedor" },
+    ],
+  },
   {
     type: "date",
     name: "fechaventa",
@@ -68,7 +78,7 @@ function CompraForm() {
   };
 
   const handleDelete = async (id) => {
-    await deleteMenu(id);
+    await deleteCompras(id);
     getResponse();
   };
 
@@ -83,7 +93,7 @@ function CompraForm() {
       columns: [
         {
           Header: "ID",
-          accessor: "id",
+          accessor: "id"
         },
         {
           Header: "Nombre cliente",
@@ -91,29 +101,47 @@ function CompraForm() {
         },
         {
           Header: "Fecha venta",
-          accessor: "fechaventa",
+          accessor:"fechaventa"
         },
         {
           Header: "Total de la venta",
-          accessor: "totalventa",
+          accessor: "totalventa"
+        },
+        {
+          Header: "Estado de la venta",
+          accessor: (data) => {
+            return (
+              <>
+                {data.anulado !=1  ? (
+                  <Text bgColor="green.300" 
+                    borderRadius="5px"
+                    color="white"
+                    textAlign="center"
+                    py="3px"
+                  >
+                    Venta activa</Text>
+                ) : (
+                  <Text
+                    bgColor="red.300"
+                    borderRadius="5px"
+                    color="white"
+                    textAlign="center"
+                    py="3px"
+                  >
+                    Venta Anulada
+                  </Text>
+                )}
+              </>
+            );
+          },
         },
         {
           Header: "Acciones",
           accessor: (data) => {
             return (
               <>
-                {/* <Button
-                  onClick={() => {
-                    setIdMenu(data.id);
-                    onOpen();
-                    setisUpdate(true);
-                  }}
-                  bgColor={"yellow.300"}
-                  mr={2}
-                >
-                  Editar
-                </Button> */}
-                <Button
+                {data.anulado !=1 && (
+                  <Button
                   onClick={() => {
                     handleDelete(data.id);
                   }}
@@ -122,6 +150,7 @@ function CompraForm() {
                 >
                   ANULAR
                 </Button>
+                )}
               </>
             );
           },

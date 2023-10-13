@@ -12,7 +12,7 @@ from api.serializers import CompraSerializer
 from api.models import Ventas
 
 class CompraViewset(viewsets.ModelViewSet):
-    queryset = Ventas.objects.using("DB_ORACLE").all()
+    queryset = Ventas.objects.using("DB_ORACLE").all().order_by('-fechaventa')
     serializer_class = CompraSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [AllowAny]
@@ -28,8 +28,14 @@ class CompraViewset(viewsets.ModelViewSet):
                 #clienteid=data.get(),
                 fechaventa = data.get("fechaventa"),
                 totalventa=data.get("totalventa"),
+                anulado=0,
             )
 
             return Response([], status=status.HTTP_201_CREATED)
-     
+    
+    def destroy(self, request, pk):
+
+            anulate = Ventas.objects.using("DB_ORACLE").filter(id=pk).update(anulado=1)
+
+            return Response([], status=204)
         

@@ -45,10 +45,10 @@ export const deleteCompras = async (id) => {
       },
     });
     const deletedCompras = response.data;
-    toast.success("Compras eliminado con exito");
+    toast.success("Compra anulada con exito");
     return deletedCompras;
   } catch (e) {
-    toast.error("Error al eliminar el Compras");
+    toast.error("Error al anular la compra");
     throw e.response;
   }
 };
