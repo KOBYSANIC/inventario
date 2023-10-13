@@ -7,7 +7,6 @@ import {
   Input,
   Stack,
   Select,
-  Option,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,9 +38,9 @@ export default function Form({ formData, schema, handleFormSubmit, children }) {
                   <Select id={input.name} {...field}>
                     {input.options.map((opcion) => {
                       return (
-                        <Option key={opcion.value} value={opcion.value}>
+                        <option key={opcion.value} value={opcion.value}>
                           {opcion.label}
-                        </Option>
+                        </option>
                       );
                     })}
                   </Select>

@@ -25,7 +25,7 @@ class CompraViewset(viewsets.ModelViewSet):
             Compra_create = Ventas.objects.using("DB_ORACLE").create(
                 
             
-                #clienteid=data.get(),
+                clienteid_id=data.get("clientes"),
                 fechaventa = data.get("fechaventa"),
                 totalventa=data.get("totalventa"),
                 anulado=0,

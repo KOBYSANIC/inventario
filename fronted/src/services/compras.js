@@ -2,6 +2,7 @@ import axios from "axios";
 import useTokenLocalStorage from "../hooks/user/useTokenLocalStorage ";
 import { toast } from "react-hot-toast";
 const urlcompras = "http://localhost:8000/api/compras/";
+const urlClientes = "http://localhost:8000/api/clientes/";
 
 const { getToken } = useTokenLocalStorage("userToken");
 
@@ -52,19 +53,21 @@ export const deleteCompras = async (id) => {
     throw e.response;
   }
 };
-
-/*export const updateCompras = async (data) => {
+export const getClientes = async () => {
   try {
-    const response = await axios.put(`${urlcompras}${data.id}/`, data.data, {
+    const response = await axios.get(urlClientes, {
       headers: {
         Authorization: `Token ${token}`,
       },
     });
-    const updatedCompras = response.data;
-    toast.success(`Compras ${data.id} actualizado con exito`);
-    return updatedCompras;
+
+    const dataClientes = response.data.map((cliente) => ({
+      value: cliente.id,
+      label: cliente.nombre,
+    }));
+
+    return dataClientes;
   } catch (e) {
-    toast.error("Error al actualizar el Compras");
     throw e.response;
   }
-};*/
+};

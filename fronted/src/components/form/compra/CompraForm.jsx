@@ -1,16 +1,14 @@
 // libraries
 import * as yup from "yup";
-import {
-  Button,
-  useDisclosure,
-  Text,
-} from "@chakra-ui/react";
+import { Button, useDisclosure, Text } from "@chakra-ui/react";
 
 // services
 import {
-  deleteMenu,
-  updateMenu,
-} from "../../../services/menu";
+  createdCompras,
+  deleteCompras,
+  getCompras,
+  getClientes,
+} from "../../../services/compras";
 
 // components
 import ContainerComponent from "../../container/ContainerComponent";
@@ -18,7 +16,6 @@ import ContainerComponent from "../../container/ContainerComponent";
 // hooks
 import useSubmitForm from "../../../hooks/user/onSubmit";
 import { useEffect, useState } from "react";
-import { createdCompras, deleteCompras, getCompras } from "../../../services/compras";
 
 const schema = yup
   .object({
@@ -27,36 +24,13 @@ const schema = yup
   })
   .required();
 
-const formData = [
-  {
-    type: "select",
-    name: "clienteid",
-    label: "Seleccionar cliente",
-    options: [
-      { value: "1", label: "Administrador" },
-      { value: "2", label: "Vendedor" },
-    ],
-  },
-  {
-    type: "date",
-    name: "fechaventa",
-    label: "Fecha de venta",
-  },
-  {
-    type: "number",
-    name: "totalventa",
-    label: "Total de la venta",
-  },
-];
-
 function CompraForm() {
   // state
   const [data, setData] = useState([]);
+  const [clientes, setClientes] = useState([]);
 
   // fomrs
-  const { error, onSubmit } = useSubmitForm(
-    createdCompras 
-  );
+  const { error, onSubmit } = useSubmitForm(createdCompras);
 
   // modal
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,10 +38,12 @@ function CompraForm() {
   const getResponse = async () => {
     const date = await getCompras();
     setData(date);
+
+    const clientes = await getClientes();
+    setClientes(clientes);
   };
 
   const handleFormSubmit = async (dataForm) => {
-
     const formDataToSend = {
       ...dataForm,
     };
@@ -87,13 +63,32 @@ function CompraForm() {
     getResponse();
   }, []);
 
+  const formData = [
+    {
+      type: "select",
+      name: "clientes",
+      label: "Seleccionar cliente",
+      options: clientes || [],
+    },
+    {
+      type: "date",
+      name: "fechaventa",
+      label: "Fecha de venta",
+    },
+    {
+      type: "number",
+      name: "totalventa",
+      label: "Total de la venta",
+    },
+  ];
+
   const columns = [
     {
       Header: " ",
       columns: [
         {
           Header: "ID",
-          accessor: "id"
+          accessor: "id",
         },
         {
           Header: "Nombre cliente",
@@ -101,25 +96,27 @@ function CompraForm() {
         },
         {
           Header: "Fecha venta",
-          accessor:"fechaventa"
+          accessor: "fechaventa",
         },
         {
           Header: "Total de la venta",
-          accessor: "totalventa"
+          accessor: "totalventa",
         },
         {
           Header: "Estado de la venta",
           accessor: (data) => {
             return (
               <>
-                {data.anulado !=1  ? (
-                  <Text bgColor="green.300" 
+                {data.anulado != 1 ? (
+                  <Text
+                    bgColor="green.300"
                     borderRadius="5px"
                     color="white"
                     textAlign="center"
                     py="3px"
                   >
-                    Venta activa</Text>
+                    Venta activa
+                  </Text>
                 ) : (
                   <Text
                     bgColor="red.300"
@@ -140,17 +137,19 @@ function CompraForm() {
           accessor: (data) => {
             return (
               <>
-                {data.anulado !=1 && (
+                
                   <Button
-                  onClick={() => {
-                    handleDelete(data.id);
-                  }}
-                  bgColor={"red.300"}
-                  color={"white"}
-                >
-                  ANULAR
-                </Button>
-                )}
+                    onClick={() => {
+                      data.anulado !=1 && 
+                      handleDelete(data.id);
+                    }}
+                    bgColor={data.anulado !=1 ? "red.300":"gray.100"}
+                    color={data.anulado !=1 ? "white":"black"}
+                    cursor={data.anulado !=1 ?"cursor":"not-allowed"}
+                  >
+                    ANULAR
+                  </Button>
+  
               </>
             );
           },
@@ -173,14 +172,13 @@ function CompraForm() {
           handleFormSubmit,
         }}
         modal={{
-          title:"Registrar Compra",
+          title: "Registrar Compra",
           isOpen,
           onOpen,
           onClose,
-          setisUpdate : ()=>{},
+          setisUpdate: () => {},
         }}
-      >
-      </ContainerComponent>
+      ></ContainerComponent>
     </>
   );
 }
