@@ -85,14 +85,17 @@ function CompraForm() {
     {
       value: 1,
       label: "Producto 1",
+      precio: 100,
     },
     {
       value: 2,
       label: "Producto 2",
+      precio: 200,
     },
     {
       value: 3,
       label: "Producto 3",
+      precio: 300,
     },
   ];
 
@@ -103,11 +106,12 @@ function CompraForm() {
       label: "Seleccione Producto",
       options: productos || [],
     },
-    {
-      type: "number",
-      name: "totalventa",
-      label: "Total de la venta",
-    },
+    // {
+    //   type: "number",
+    //   name: "totalventa",
+    //   label: "Total de la venta",
+    //   disabled: true,
+    // },
   ];
 
   const columns = [
