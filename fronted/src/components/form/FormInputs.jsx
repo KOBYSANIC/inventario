@@ -143,7 +143,6 @@ const FormInputs = ({
                 colorScheme="orange"
                 bg="green.400"
                 _hover={{ bg: "green.500" }}
-                type="submit"
                 mb="16px"
                 onClick={handleAddItem}
               >
