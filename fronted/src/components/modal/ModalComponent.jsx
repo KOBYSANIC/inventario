@@ -9,7 +9,7 @@ import {
 import React from "react";
 import Form from "../form/Form";
 
-const ModalComponent = ({ modal, form, children }) => {
+const ModalComponent = ({ modal, form, children, formStep = false }) => {
   return (
     <>
       <Modal isOpen={modal.isOpen} onClose={modal.onClose}>
@@ -19,6 +19,7 @@ const ModalComponent = ({ modal, form, children }) => {
           <ModalCloseButton />
           <ModalBody>
             <Form
+              formStep={formStep}
               formData={form.formData}
               schema={form.schema}
               onSubmit={form.onSubmit}

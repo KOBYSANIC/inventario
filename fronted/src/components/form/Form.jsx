@@ -1,20 +1,24 @@
 import {
   Button,
-  Flex,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   Stack,
   Select,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
+import FormStep from "./FormStep";
 
-export default function Form({ formData, schema, handleFormSubmit, children }) {
+export default function Form({
+  formData,
+  schema,
+  handleFormSubmit,
+  children,
+  formStep = false,
+}) {
   const {
-    register, 
+    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -23,54 +27,57 @@ export default function Form({ formData, schema, handleFormSubmit, children }) {
   });
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      {formData.map((input) => {
-        return (
-          <div key={input.name}>
-            <FormControl>
-              <FormLabel>{input.label}</FormLabel>
-              {input.type === "select" ? (
-              <Controller
-                name={input.name} // Nombre del campo en los datos del formulario
-                control={control} // Proporciona el controlador de React Hook Form
-                defaultValue="1" // Valor por defecto
-                rules={{ required: "Este campo es obligatorio" }} // Reglas de validación
-                render={({ field }) => (
-                  <Select id={input.name} {...field}>
-                    {input.options.map((opcion) => {
-                      return (
-                        <option key={opcion.value} value={opcion.value}>
-                          {opcion.label}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
-            ) : (
-              <Input
-                {...register(input.name)}
-                type={input.type}
-              />
-            )}
-              <p style={{ color: "red" }}>{errors[input.name]?.message}</p>
-            </FormControl>
-          </div>
-        );
-      })}
-      {children}
-      <Stack spacing={6} mt="20px">
-        <Button
-          bg={"blue.400"}
-          color={"white"}
-          _hover={{
-            bg: "blue.500",
-          }}
-          type="submit"
-          mb="16px"
-        >
-          Guardar
-        </Button>
-      </Stack>
+      {formStep ? (
+        <FormStep />
+      ) : (
+        <>
+          {formData.map((input) => {
+            return (
+              <div key={input.name}>
+                <FormControl>
+                  <FormLabel>{input.label}</FormLabel>
+                  {input.type === "select" ? (
+                    <Controller
+                      name={input.name} // Nombre del campo en los datos del formulario
+                      control={control} // Proporciona el controlador de React Hook Form
+                      defaultValue="1" // Valor por defecto
+                      rules={{ required: "Este campo es obligatorio" }} // Reglas de validación
+                      render={({ field }) => (
+                        <Select id={input.name} {...field}>
+                          {input.options.map((opcion) => {
+                            return (
+                              <option key={opcion.value} value={opcion.value}>
+                                {opcion.label}
+                              </option>
+                            );
+                          })}
+                        </Select>
+                      )}
+                    />
+                  ) : (
+                    <Input {...register(input.name)} type={input.type} />
+                  )}
+                  <p style={{ color: "red" }}>{errors[input.name]?.message}</p>
+                </FormControl>
+              </div>
+            );
+          })}
+          {children}
+          <Stack spacing={6} mt="20px">
+            <Button
+              bg={"blue.400"}
+              color={"white"}
+              _hover={{
+                bg: "blue.500",
+              }}
+              type="submit"
+              mb="16px"
+            >
+              Guardar
+            </Button>
+          </Stack>
+        </>
+      )}
     </form>
   );
 }

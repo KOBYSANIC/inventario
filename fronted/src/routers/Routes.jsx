@@ -32,11 +32,9 @@ function Rutas() {
       <Route
         path="/compras"
         element={
-          <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader>
-              <CompraForm/>
-            </SidebarWithHeader>
-          </ProtectedRoute>
+          <SidebarWithHeader>
+            <CompraForm />
+          </SidebarWithHeader>
         }
       />
       <Route
@@ -52,11 +50,9 @@ function Rutas() {
       <Route
         path="/Agregar_menu"
         element={
-          <ProtectedRoute redirectTo="/">
-            <SidebarWithHeader>
-              <MenuForm />
-            </SidebarWithHeader>
-          </ProtectedRoute>
+          <SidebarWithHeader>
+            <MenuForm />
+          </SidebarWithHeader>
         }
       />
       <Route path="/account" element={<Account />} />

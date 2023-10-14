@@ -17,6 +17,7 @@ const ContainerComponent = ({
   form,
   modal,
   children,
+  formStep = false,
 }) => {
   return (
     <>
@@ -46,7 +47,7 @@ const ContainerComponent = ({
             {textButton}
           </Button>
           <TableComponent columns={columns} data={data || [{}]} />
-          <ModalComponent modal={modal} form={form}>
+          <ModalComponent formStep={formStep} modal={modal} form={form}>
             {children}
           </ModalComponent>
         </Stack>

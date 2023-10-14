@@ -178,6 +178,7 @@ function CompraForm() {
           onClose,
           setisUpdate: () => {},
         }}
+        formStep
       ></ContainerComponent>
     </>
   );
