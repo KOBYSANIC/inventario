@@ -9,7 +9,14 @@ import {
 import React from "react";
 import Form from "../form/Form";
 
-const ModalComponent = ({ modal, form, children, formStep = false }) => {
+const ModalComponent = ({
+  modal,
+  form,
+  children,
+  formStep = false,
+  setSelectedItems = () => ({}),
+  selectedItems = () => ({}),
+}) => {
   return (
     <>
       <Modal isOpen={modal.isOpen} onClose={modal.onClose}>
@@ -25,6 +32,8 @@ const ModalComponent = ({ modal, form, children, formStep = false }) => {
               schema={form.schema}
               onSubmit={form.onSubmit}
               handleFormSubmit={form.handleFormSubmit}
+              setSelectedItems={setSelectedItems}
+              selectedItems={selectedItems}
             >
               {children}
             </Form>

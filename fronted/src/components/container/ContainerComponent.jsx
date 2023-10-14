@@ -18,6 +18,8 @@ const ContainerComponent = ({
   modal,
   children,
   formStep = false,
+  selectedItems = () => ({}),
+  setSelectedItems = () => ({}),
 }) => {
   return (
     <>
@@ -47,7 +49,13 @@ const ContainerComponent = ({
             {textButton}
           </Button>
           <TableComponent columns={columns} data={data || [{}]} />
-          <ModalComponent formStep={formStep} modal={modal} form={form}>
+          <ModalComponent
+            formStep={formStep}
+            modal={modal}
+            form={form}
+            setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
+          >
             {children}
           </ModalComponent>
         </Stack>

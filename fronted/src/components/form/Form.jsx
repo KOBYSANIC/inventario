@@ -11,6 +11,8 @@ export default function Form({
   handleFormSubmit,
   children,
   formStep = false,
+  setSelectedItems = () => ({}),
+  selectedItems = () => ({}),
 }) {
   const {
     register,
@@ -30,6 +32,8 @@ export default function Form({
             register={register}
             errors={errors}
             control={control}
+            setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
           />
         </>
       ) : (

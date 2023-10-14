@@ -29,6 +29,7 @@ function CompraForm() {
   const [data, setData] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [productos, setProductos] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   // fomrs
   const { error, onSubmit } = useSubmitForm(createdCompras);
@@ -50,11 +51,16 @@ function CompraForm() {
   const handleFormSubmit = async (dataForm) => {
     const formDataToSend = {
       ...dataForm,
+      selectedItems: Object.values(selectedItems), // Agrega los elementos seleccionados de la tabla al objeto de datos a enviar
     };
 
-    await onSubmit(formDataToSend);
-    getResponse();
-    onClose();
+    try {
+      await onSubmit(formDataToSend); // Envia los datos al backend
+      getResponse();
+      onClose();
+    } catch (error) {
+      console.error("Error al enviar los datos al backend:", error);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -104,7 +110,7 @@ function CompraForm() {
       type: "select",
       name: "producto",
       label: "Seleccione Producto",
-      options: productos || [],
+      options: productosList || [],
     },
     // {
     //   type: "number",
@@ -209,6 +215,8 @@ function CompraForm() {
           setisUpdate: () => {},
         }}
         formStep
+        selectedItems = {selectedItems}
+        setSelectedItems = {setSelectedItems}
       ></ContainerComponent>
     </>
   );

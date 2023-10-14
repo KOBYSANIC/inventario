@@ -2,7 +2,15 @@ import { Button, ButtonGroup, Flex, Progress, Stack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import FormInputs from "./FormInputs";
 
-const FormStep = ({ formData, register, errors, control, formData2 = [] }) => {
+const FormStep = ({
+  formData,
+  register,
+  errors,
+  control,
+  formData2 = [],
+  setSelectedItems = () => ({}),
+  selectedItems = () => ({}),
+}) => {
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(50);
   return (
@@ -24,6 +32,8 @@ const FormStep = ({ formData, register, errors, control, formData2 = [] }) => {
             errors={errors}
             control={control}
             isStep2={true}
+            setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
           />
         )}
         <ButtonGroup mt="5%" w="100%" mb="5%">

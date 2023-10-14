@@ -18,9 +18,10 @@ const FormInputs = ({
   errors,
   control,
   isStep2 = false,
+  setSelectedItems = () => ({}),
+  selectedItems = () => ({}),
 }) => {
   const [selectedOption, setSelectedOption] = useState(0);
-  const [selectedItems, setSelectedItems] = useState({});
 
   const handleOptionChange = (event) => {
     const selectedIndex = event.target.selectedIndex;
