@@ -12,6 +12,7 @@ import FormStep from "./FormStep";
 
 export default function Form({
   formData,
+  formData2,
   schema,
   handleFormSubmit,
   children,
@@ -28,40 +29,23 @@ export default function Form({
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       {formStep ? (
-        <FormStep />
+        <>
+          <FormStep
+            formData={formData}
+            formData2={formData2}
+            register={register}
+            errors={errors}
+            control={control}
+          />
+        </>
       ) : (
         <>
-          {formData.map((input) => {
-            return (
-              <div key={input.name}>
-                <FormControl>
-                  <FormLabel>{input.label}</FormLabel>
-                  {input.type === "select" ? (
-                    <Controller
-                      name={input.name} // Nombre del campo en los datos del formulario
-                      control={control} // Proporciona el controlador de React Hook Form
-                      defaultValue="1" // Valor por defecto
-                      rules={{ required: "Este campo es obligatorio" }} // Reglas de validación
-                      render={({ field }) => (
-                        <Select id={input.name} {...field}>
-                          {input.options.map((opcion) => {
-                            return (
-                              <option key={opcion.value} value={opcion.value}>
-                                {opcion.label}
-                              </option>
-                            );
-                          })}
-                        </Select>
-                      )}
-                    />
-                  ) : (
-                    <Input {...register(input.name)} type={input.type} />
-                  )}
-                  <p style={{ color: "red" }}>{errors[input.name]?.message}</p>
-                </FormControl>
-              </div>
-            );
-          })}
+          <FormRender
+            formData={formData}
+            register={register}
+            errors={errors}
+            control={control}
+          />
           {children}
           <Stack spacing={6} mt="20px">
             <Button

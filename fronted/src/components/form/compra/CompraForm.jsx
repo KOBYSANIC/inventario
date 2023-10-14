@@ -20,7 +20,6 @@ import { useEffect, useState } from "react";
 const schema = yup
   .object({
     fechaventa: yup.string().required("La fecha requerida"),
-    totalventa: yup.string().required("El total es requerido"),
   })
   .required();
 
@@ -74,6 +73,30 @@ function CompraForm() {
       type: "date",
       name: "fechaventa",
       label: "Fecha de venta",
+    },
+  ];
+
+  const productosList = [
+    {
+      value: 1,
+      label: "Producto 1",
+    },
+    {
+      value: 2,
+      label: "Producto 2",
+    },
+    {
+      value: 3,
+      label: "Producto 3",
+    },
+  ];
+
+  const formData2 = [
+    {
+      type: "select",
+      name: "producto",
+      label: "Seleccione Producto",
+      options: productosList || [],
     },
     {
       type: "number",
@@ -137,19 +160,16 @@ function CompraForm() {
           accessor: (data) => {
             return (
               <>
-                
-                  <Button
-                    onClick={() => {
-                      data.anulado !=1 && 
-                      handleDelete(data.id);
-                    }}
-                    bgColor={data.anulado !=1 ? "red.300":"gray.100"}
-                    color={data.anulado !=1 ? "white":"black"}
-                    cursor={data.anulado !=1 ?"cursor":"not-allowed"}
-                  >
-                    ANULAR
-                  </Button>
-  
+                <Button
+                  onClick={() => {
+                    data.anulado != 1 && handleDelete(data.id);
+                  }}
+                  bgColor={data.anulado != 1 ? "red.300" : "gray.100"}
+                  color={data.anulado != 1 ? "white" : "black"}
+                  cursor={data.anulado != 1 ? "cursor" : "not-allowed"}
+                >
+                  ANULAR
+                </Button>
               </>
             );
           },
@@ -167,6 +187,7 @@ function CompraForm() {
         columns={columns}
         form={{
           formData,
+          formData2,
           schema,
           onSubmit,
           handleFormSubmit,

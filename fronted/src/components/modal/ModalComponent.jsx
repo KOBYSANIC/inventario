@@ -21,6 +21,7 @@ const ModalComponent = ({ modal, form, children, formStep = false }) => {
             <Form
               formStep={formStep}
               formData={form.formData}
+              formData2={form.formData2 || []}
               schema={form.schema}
               onSubmit={form.onSubmit}
               handleFormSubmit={form.handleFormSubmit}
