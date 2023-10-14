@@ -1,19 +1,13 @@
 import {
-  Box,
   Button,
   ButtonGroup,
   Flex,
   FormControl,
-  FormHelperText,
   FormLabel,
   GridItem,
-  Heading,
   Input,
-  InputGroup,
-  InputRightElement,
   Progress,
   Select,
-  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import FormInputs from "./FormInputs";
@@ -158,7 +152,6 @@ const Form2 = () => {
 };
 
 const FormStep = ({ formData, register, errors, control, formData2 = [] }) => {
-  const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(50);
   return (
@@ -220,15 +213,6 @@ const FormStep = ({ formData, register, errors, control, formData2 = [] }) => {
                 colorScheme="red"
                 variant="solid"
                 type="submit"
-                onClick={() => {
-                  toast({
-                    title: "Account created.",
-                    description: "We've created your account for you.",
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                  });
-                }}
               >
                 Guardar
               </Button>

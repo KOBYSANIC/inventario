@@ -8,6 +8,7 @@ import {
   deleteCompras,
   getCompras,
   getClientes,
+  getProductos,
 } from "../../../services/compras";
 
 // components
@@ -27,6 +28,7 @@ function CompraForm() {
   // state
   const [data, setData] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const [productos, setProductos] = useState([]);
 
   // fomrs
   const { error, onSubmit } = useSubmitForm(createdCompras);
@@ -40,6 +42,9 @@ function CompraForm() {
 
     const clientes = await getClientes();
     setClientes(clientes);
+
+    const productos = await getProductos();
+    setProductos(productos);
   };
 
   const handleFormSubmit = async (dataForm) => {
@@ -96,7 +101,7 @@ function CompraForm() {
       type: "select",
       name: "producto",
       label: "Seleccione Producto",
-      options: productosList || [],
+      options: productos || [],
     },
     {
       type: "number",

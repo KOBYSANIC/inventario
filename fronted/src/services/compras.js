@@ -3,6 +3,7 @@ import useTokenLocalStorage from "../hooks/user/useTokenLocalStorage ";
 import { toast } from "react-hot-toast";
 const urlcompras = "http://localhost:8000/api/compras/";
 const urlClientes = "http://localhost:8000/api/clientes/";
+const urlProductos = "http://localhost:8000/api/producto/";
 
 const { getToken } = useTokenLocalStorage("userToken");
 
@@ -67,6 +68,25 @@ export const getClientes = async () => {
     }));
 
     return dataClientes;
+  } catch (e) {
+    throw e.response;
+  }
+};
+export const getProductos = async () => {
+  try {
+    const response = await axios.get(urlProductos, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+
+    const dataProductos = response.data.map((producto) => ({
+      value: producto.id,
+      label: producto.nombre,
+      precio: producto.precio,
+    }));
+
+    return dataProductos;
   } catch (e) {
     throw e.response;
   }

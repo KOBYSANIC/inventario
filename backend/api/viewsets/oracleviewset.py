@@ -17,4 +17,5 @@ class ClientesViewset(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [AllowAny]
     
+    
         
