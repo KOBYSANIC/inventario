@@ -1,14 +1,8 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Stack,
-  Select,
-} from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import FormStep from "./FormStep";
+import FormInputs from "./FormInputs";
 
 export default function Form({
   formData,
@@ -40,7 +34,7 @@ export default function Form({
         </>
       ) : (
         <>
-          <FormRender
+          <FormInputs
             formData={formData}
             register={register}
             errors={errors}
