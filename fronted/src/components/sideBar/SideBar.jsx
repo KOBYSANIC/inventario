@@ -39,8 +39,8 @@ const SidebarContent = ({ data, onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+        <Text fontSize="20px" fontFamily="monospace" fontWeight="bold" textAlign="center">
+          Punto de venta
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -135,7 +135,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        Punto de venta
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
@@ -172,11 +172,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
+              <MenuItem>Perfil</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={handleFormSubmit}>Sign out</MenuItem>
+              <MenuItem onClick={handleFormSubmit}>Salir</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -223,8 +221,7 @@ const SidebarWithHeader = ({ children }) => {
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
       </Box>
-    </Box>
-  );
+    </Box> 
 };
 
 export default SidebarWithHeader;
