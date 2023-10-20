@@ -221,7 +221,8 @@ const SidebarWithHeader = ({ children }) => {
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
       </Box>
-    </Box> 
+    </Box>
+  );
 };
 
 export default SidebarWithHeader;
