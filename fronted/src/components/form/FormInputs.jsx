@@ -116,7 +116,10 @@ const FormInputs = ({
                 <Select
                   id={input.name}
                   {...field}
-                  onChange={handleOptionChange}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleOptionChange(e); // Agrega esta línea para manejar el cambio del select
+                  }}
                   value={formData[0].options[selectedOption]?.value}
                 >
                   {input.options.map((opcion) => (
