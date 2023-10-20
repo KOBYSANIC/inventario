@@ -68,3 +68,17 @@ export const updateProduct = async (data) => {
     throw e.response;
   }
 };
+
+export const getReportes = async () => {
+  try {
+    const response = await axios.get(`${urlProducto}/reportes`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    const dataMenu = response.data;
+    return dataMenu;
+  } catch (e) {
+    throw e.response;
+  }
+};
