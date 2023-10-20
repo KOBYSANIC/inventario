@@ -110,7 +110,7 @@ function CompraForm() {
       type: "select",
       name: "producto",
       label: "Seleccione Producto",
-      options: productosList || [],
+      options: productos || [],
     },
     // {
     //   type: "number",
