@@ -196,8 +196,8 @@ function CompraForm() {
   return (
     <>
       <ContainerComponent
-        title="Compras"
-        textButton="Agregar nueva compra"
+        title="Ventas"
+        textButton="Agregar nueva venta"
         data={data}
         columns={columns}
         form={{
@@ -208,7 +208,7 @@ function CompraForm() {
           handleFormSubmit,
         }}
         modal={{
-          title: "Registrar Compra",
+          title: "Registrar venta ",
           isOpen,
           onOpen,
           onClose,
