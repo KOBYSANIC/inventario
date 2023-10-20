@@ -12,6 +12,7 @@ import Account from "../pages/Account";
 import MenuForm from "../components/form/menu/MenuForm";
 import CompraForm from "../components/form/compra/CompraForm";
 import ProductoForm from "../components/form/productos/ProductoForm";
+import ReportesForm from "../components/form/reportes/ReportesForm";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -39,11 +40,11 @@ function Rutas() {
         }
       />
       <Route
-        path="/detalle_compra"
+        path="/reportes"
         element={
           <ProtectedRoute redirectTo="/">
             <SidebarWithHeader>
-              <h1>Detalle Compra</h1>
+              <ReportesForm />
             </SidebarWithHeader>
           </ProtectedRoute>
         }
