@@ -71,7 +71,7 @@ export const updateProduct = async (data) => {
 
 export const getReportes = async () => {
   try {
-    const response = await axios.get(`${urlProducto}/reportes`, {
+    const response = await axios.get(`${urlProducto}reportes`, {
       headers: {
         Authorization: `Token ${token}`,
       },

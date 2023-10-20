@@ -11,6 +11,8 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
+import moment from 'moment';
+
 // services
 import { getReportes } from "../../../services/producto";
 
@@ -83,8 +85,8 @@ function ReportesForm() {
 
           {/* <TableComponent columns={columns} data={data || [{}]} /> */}
 
-          {producto &&
-            producto.map((item) => (
+          {date &&
+            date.map((item) => (
               <Stat
                 backgroundColor={"white"}
                 padding={"15px"}
@@ -97,8 +99,12 @@ function ReportesForm() {
                 </StatLabel>
                 <StatNumber>{item.total_venta}</StatNumber>
                 <StatHelpText color={"gray.500"}>
-                  {item.primera_venta} - {item.ultima_venta}
-                </StatHelpText>
+                    {item.primera_venta && item.ultima_venta
+                      ? moment(item.primera_venta).format("MMM DD YYYY") +
+                        " - " +
+                        moment(item.ultima_venta).format("MMM DD YYYY")
+                      : "Sin ventas"}
+                  </StatHelpText>
               </Stat>
             ))}
         </Stack>
