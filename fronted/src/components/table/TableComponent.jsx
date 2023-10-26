@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { useTable } from "react-table";
 
-const TableComponent = ({ columns, data }) => {
+const TableComponent = ({ variant="striped", columns, data, tableRef, firsThree=false }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -20,7 +20,7 @@ const TableComponent = ({ columns, data }) => {
   // Render the UI for your table
   return (
     <TableContainer>
-      <Table variant="striped" colorScheme="green" {...getTableProps()}>
+      <Table variant={variant} ref={tableRef} colorScheme="green" {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -34,7 +34,7 @@ const TableComponent = ({ columns, data }) => {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()}>
+              <Tr bg={firsThree && i<3 && "green.100"} {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
                     <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>

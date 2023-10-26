@@ -50,7 +50,7 @@ const FormStep = ({
                 w="7rem"
                 mr="5%"
               >
-                Back
+                Atrás
               </Button>
               <Button
                 w="7rem"
@@ -66,7 +66,7 @@ const FormStep = ({
                 colorScheme="teal"
                 variant="outline"
               >
-                Next
+                Siguiente
               </Button>
             </Flex>
             {step === 2 ? (
