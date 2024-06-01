@@ -79,11 +79,11 @@ const FormInputs = ({
           accessor: "nombre",
         },
         {
-          Header: "Cantidad",
+          Header: "Estado",
           accessor: "cantidad",
         },
         {
-          Header: "Subtotal",
+          Header: "Ingreso",
           accessor: "subtotal",
         },
         {
@@ -150,7 +150,7 @@ const FormInputs = ({
                 mb="16px"
                 onClick={handleAddItem}
               >
-                Agregar
+                Registrar Adopción
               </Button>
             </Stack>
 

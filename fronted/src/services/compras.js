@@ -31,10 +31,10 @@ export const createdCompras = async (data) => {
       },
     });
     const createdCompras = response.data;
-    toast.success("Compras creado con exito");
+    toast.success("Registro creado con exito");
     return createdCompras;
   } catch (e) {
-    toast.error("Error al crear el Compras");
+    toast.error("Error al crear el registro");
     throw e.response;
   }
 };
@@ -47,10 +47,10 @@ export const deleteCompras = async (id) => {
       },
     });
     const deletedCompras = response.data;
-    toast.success("Compra anulada con exito");
+    toast.success("Registro anulado con exito");
     return deletedCompras;
   } catch (e) {
-    toast.error("Error al anular la compra");
+    toast.error("Error al anular la registro");
     throw e.response;
   }
 };

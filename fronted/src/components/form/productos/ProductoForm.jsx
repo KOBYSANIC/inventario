@@ -27,9 +27,9 @@ import { createdProduct, deleteProduct, getProducto, updateProduct } from "../..
 
 const schema = yup
   .object({
-    nombre: yup.string().required("El nombre del producto es requerido"),
-    precio: yup.string().required("El precio es requerido"),
-    stockactual: yup.string().required("El stock es requerido"),
+    nombre: yup.string().required("El nombre del animal es requerido"),
+    precio: yup.string().required("El estado es requerido"),
+    stockactual: yup.string().required("El ingreso es requerido"),
   })
   .required();
 
@@ -37,17 +37,17 @@ const formData = [
   {
     type: "text",
     name: "nombre",
-    label: "Nombre Producto",
+    label: "Nombre",
   },
   {
     type: "text",
     name: "precio",
-    label: "Precio",
+    label: "Estado",
   },
   {
     type: "number",
     name: "stockactual",
-    label: "Ingreso del stock",
+    label: "Ingreso",
   },
 ];
 
@@ -107,7 +107,7 @@ function ProductoForm() {
           accessor: "nombre",
         },
         {
-          Header: "Precio",
+          Header: "Estado",
           accessor: "precio",
         },
         {
@@ -146,8 +146,8 @@ function ProductoForm() {
   return (
     <>
       <ContainerComponent
-        title="Administrar Productos"
-        textButton="Agregar producto"
+        title="Administración de animales"
+        textButton="Agregar animal"
         data={data}
         columns={columns}
         form={{
@@ -157,7 +157,7 @@ function ProductoForm() {
           handleFormSubmit,
         }}
         modal={{
-          title: isUpdate == true ? "Actualizar Producto" : "Agregar Producto",
+          title: isUpdate == true ? "Actualizar registro" : "Agregar registro",
           isOpen,
           onOpen,
           onClose,

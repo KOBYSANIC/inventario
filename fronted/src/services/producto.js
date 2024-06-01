@@ -29,10 +29,10 @@ export const createdProduct = async (data) => {
       },
     });
     const createdProducto = response.data;
-    toast.success("Producto agregado con exito");
+    toast.success("Registro agregado con éxito");
     return createdProducto;
   } catch (e) {
-    toast.error("Error al agregar el producto");
+    toast.error("Error al agregar el registro");
     throw e.response;
   }
 };
@@ -45,10 +45,10 @@ export const deleteProduct = async (id) => {
       },
     });
     const deletedProducto = response.data;
-    toast.success("Producto eliminado con exito");
+    toast.success("Registro eliminado con éxito");
     return deletedProducto;
   } catch (e) {
-    toast.error("Error al eliminar el producto");
+    toast.error("Error al eliminar el registro");
     throw e.response;
   }
 };
@@ -61,10 +61,10 @@ export const updateProduct = async (data) => {
       },
     });
     const updatedProducto = response.data;
-    toast.success(`Producto ${data.id} actualizado con exito`);
+    toast.success(`Registro ${data.id} actualizado con éxito`);
     return updatedProducto;
   } catch (e) {
-    toast.error("Error al actualizar el producto");
+    toast.error("Error al actualizar el registro");
     throw e.response;
   }
 };

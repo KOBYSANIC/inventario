@@ -192,7 +192,7 @@ function MenuForm() {
               name="2"
               colorScheme="green"
             >
-              Vendedor
+              Usuario Normal
             </Checkbox>
           </FormControl>
         </Stack>

@@ -48,30 +48,30 @@ function ReportesForm() {
           accessor: "nombre",
         },
         {
-          Header: "Cantida vendida",
+          Header: "Cantida de adopciones",
           accessor: "total_venta",
         },
         {
-          Header: "Primera Venta",
+          Header: "Primera adopción",
           accessor: (data) => {
             return (
               <Text>
                 {data.primera_venta
                   ? moment(data.primera_venta).format("MMM DD YYYY")
-                : "Sin ventas"}
+                : "Sin adopciones"}
               </Text>
             );
           },
 
         },
         {
-          Header: "Ultima Venta",
+          Header: "Ultima adopción",
           accessor: (data) => {
             return (
               <Text >
                 {data.ultima_venta
                   ? moment(data.ultima_venta).format("MMM DD YYYY")
-                : "Sin ventas"}
+                : "Sin adopciones"}
               </Text>
             );
           },
@@ -103,7 +103,7 @@ function ReportesForm() {
               <Box position="relative" flex="1" textAlign="end">
                 <DownloadTableExcel
                           position="absolute"
-                          filename="Reporte de ventas"
+                          filename="Reporte de adopciones"
                           sheet="Reporte"
                           currentTableRef={tableRef.current}
                       >
@@ -119,7 +119,7 @@ function ReportesForm() {
               </Box>
               </Flex>
               <Text fontSize={"18px"} color={"gray.500"}>
-                Producto mas vendido
+                Registro de adopciones
               </Text>
               
             </Flex>

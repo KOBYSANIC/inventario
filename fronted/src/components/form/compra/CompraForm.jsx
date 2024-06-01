@@ -77,13 +77,13 @@ function CompraForm() {
     {
       type: "select",
       name: "clientes",
-      label: "Seleccionar cliente",
+      label: "Seleccionar nombre",
       options: clientes || [],
     },
     {
       type: "date",
       name: "fechaventa",
-      label: "Fecha de venta",
+      label: "Fecha de adopción",
     },
   ];
 
@@ -109,7 +109,7 @@ function CompraForm() {
     {
       type: "select",
       name: "producto",
-      label: "Seleccione Producto",
+      label: "Seleccione Animal",
       options: productos || [],
     },
     // {
@@ -129,19 +129,19 @@ function CompraForm() {
           accessor: "id",
         },
         {
-          Header: "Nombre cliente",
+          Header: "Nombre",
           accessor: "clienteid",
         },
         {
-          Header: "Fecha venta",
+          Header: "Fecha adopcion",
           accessor: "fechaventa",
         },
         {
-          Header: "Total de la venta",
+          Header: "Ingreso",
           accessor: "totalventa",
         },
         {
-          Header: "Estado de la venta",
+          Header: "Estado de la adopción",
           accessor: (data) => {
             return (
               <>
@@ -153,7 +153,7 @@ function CompraForm() {
                     textAlign="center"
                     py="3px"
                   >
-                    Venta activa
+                    Aceptado
                   </Text>
                 ) : (
                   <Text
@@ -163,7 +163,7 @@ function CompraForm() {
                     textAlign="center"
                     py="3px"
                   >
-                    Venta Anulada
+                    Denegar
                   </Text>
                 )}
               </>
@@ -183,7 +183,7 @@ function CompraForm() {
                   color={data.anulado != 1 ? "white" : "black"}
                   cursor={data.anulado != 1 ? "cursor" : "not-allowed"}
                 >
-                  ANULAR
+                  Denegar
                 </Button>
               </>
             );
@@ -196,8 +196,8 @@ function CompraForm() {
   return (
     <>
       <ContainerComponent
-        title="Ventas"
-        textButton="Agregar nueva venta"
+        title="Adopciones"
+        textButton="Agregar nuevo registro"
         data={data}
         columns={columns}
         form={{
@@ -208,7 +208,7 @@ function CompraForm() {
           handleFormSubmit,
         }}
         modal={{
-          title: "Registrar venta ",
+          title: "Registrar adopción",
           isOpen,
           onOpen,
           onClose,

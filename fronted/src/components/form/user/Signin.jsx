@@ -23,6 +23,7 @@ import { useContext } from "react";
 import { InterfaceContext } from "../../../context/Interface";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import amigoAnimales from "/Users/marv_/Downloads/amigoAnimales.jpg";
 
 const schema = yup
   .object({
@@ -113,7 +114,7 @@ function Signin() {
             minW={"100%"}
             maxH={"100vh"}
             src={
-              "https://images.pexels.com/photos/4483609/pexels-photo-4483609.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              amigoAnimales
             }
           />
         </Flex>
