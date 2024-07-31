@@ -20,6 +20,7 @@ const ContainerComponent = ({
   formStep = false,
   selectedItems = () => ({}),
   setSelectedItems = () => ({}),
+  hiddenCreate = false,
 }) => {
   return (
     <>
@@ -34,20 +35,22 @@ const ContainerComponent = ({
               {title}
             </Text>
           </Heading>
-          <Button
-            rounded={"full"}
-            mr="30px"
-            colorScheme={"orange"}
-            bg={"green.400"}
-            _hover={{ bg: "green.500" }}
-            w={"200px"}
-            onClick={() => {
-              modal.onOpen();
-              modal.setisUpdate(false);
-            }}
-          >
-            {textButton}
-          </Button>
+          {!hiddenCreate && (
+            <Button
+              rounded={"full"}
+              mr="30px"
+              colorScheme={"orange"}
+              bg={"green.400"}
+              _hover={{ bg: "green.500" }}
+              w={"200px"}
+              onClick={() => {
+                modal.onOpen();
+                modal.setisUpdate(false);
+              }}
+            >
+              {textButton}
+            </Button>
+          )}
           <TableComponent columns={columns} data={data || [{}]} />
           <ModalComponent
             formStep={formStep}

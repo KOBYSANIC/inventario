@@ -13,6 +13,7 @@ import MenuForm from "../components/form/menu/MenuForm";
 import CompraForm from "../components/form/compra/CompraForm";
 import ProductoForm from "../components/form/productos/ProductoForm";
 import ReportesForm from "../components/form/reportes/ReportesForm";
+import UsuarioForm from "../components/form/usuario/UsuarioForm";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -81,6 +82,17 @@ function Rutas() {
           <ProtectedRoute redirectTo="/">
             <SidebarWithHeader>
               <ProductoForm />
+            </SidebarWithHeader>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/usuarios"
+        element={
+          <ProtectedRoute redirectTo="/">
+            <SidebarWithHeader>
+              <UsuarioForm />
             </SidebarWithHeader>
           </ProtectedRoute>
         }

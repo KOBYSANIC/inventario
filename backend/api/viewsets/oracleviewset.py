@@ -12,10 +12,7 @@ from api.serializers import ClienteSerializer
 from api.models import Clientes
 
 class ClientesViewset(viewsets.ModelViewSet):
-    queryset = Clientes.objects.using("DB_ORACLE").all()
+    queryset = Clientes.objects.all()
     serializer_class = ClienteSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [AllowAny]
-    
-    
-        

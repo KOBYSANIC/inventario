@@ -88,28 +88,45 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': 'inventario',
+#         'HOST': 'DESKTOP-8UGV6B3\SQLEXPRESS',
+#         'USER': 'ADMIN_VENTA',
+#         'PASSWORD': 'snc123',
+#         'PORT': '',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#         },
+#     },
+#         'DB_ORACLE': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': 'xe',
+#         'USER': 'ADMIN_DBA',
+#         'PASSWORD': 'ADMIN_DBA',
+#         'HOST': 'localhost',
+#         'PORT': '1521',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'inventario',
-        'HOST': 'DESKTOP-8UGV6B3\SQLEXPRESS',
-        'USER': 'ADMIN_VENTA',
-        'PASSWORD': 'snc123',
-        'PORT': '',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-        },
-    },
-        'DB_ORACLE': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'xe',
-        'USER': 'ADMIN_DBA',
-        'PASSWORD': 'ADMIN_DBA',
+        'USER': 'user',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
-        'PORT': '1521',
+        'PORT': '3306',
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

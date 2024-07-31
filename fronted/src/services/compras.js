@@ -34,7 +34,9 @@ export const createdCompras = async (data) => {
     toast.success("Compras creado con exito");
     return createdCompras;
   } catch (e) {
-    toast.error("Error al crear el Compras");
+
+    const message = e?.response?.data?.error || "Error al crear el Compras";
+    toast.error(message);
     throw e.response;
   }
 };

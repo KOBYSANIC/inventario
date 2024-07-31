@@ -17,7 +17,7 @@ from django.db.models.functions import Cast, Coalesce
 from django.db.models import CharField, Value, IntegerField
 
 class ProductoViewset(viewsets.ModelViewSet):
-    queryset = Productos.objects.using("DB_ORACLE").all()
+    queryset = Productos.objects.all()
     serializer_class = ProductoSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [AllowAny]
@@ -27,7 +27,7 @@ class ProductoViewset(viewsets.ModelViewSet):
             
             data = request.data
 
-            producto_create = Productos.objects.using("DB_ORACLE").create(
+            producto_create = Productos.objects.create(
                 
             
                 nombre=data.get("nombre"),
@@ -44,7 +44,7 @@ class ProductoViewset(viewsets.ModelViewSet):
             data = request.data
 
             # Obtén el menú que estás actualizando usando el pk proporcionado en la URL
-            producto = Productos.objects.using("DB_ORACLE").get(pk=pk)
+            producto = Productos.objects.get(pk=pk)
 
             # Actualiza los campos del menú
             producto.nombre = data.get("nombre")
@@ -61,7 +61,7 @@ class ProductoViewset(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get']) 
     def reportes(self, request, *args, **kwargs):
-            result = Productos.objects.using("DB_ORACLE").annotate(
+            result = Productos.objects.annotate(
                 total_venta= Coalesce(Sum('detallesventa__cantidad'), Value(0), output_field=IntegerField()),
                 primera_venta=Cast(Min('detallesventa__ventaid__fechaventa'), CharField()),
                 ultima_venta=Cast(Max('detallesventa__ventaid__fechaventa'), CharField())

@@ -54,7 +54,6 @@ const useSubmitForm = (submitFunction) => {
       setError(e);
       localStorage.setItem("userName", "");
       localStorage.setItem("roleUser", "");
-      console.log(e);
     }
   };
 

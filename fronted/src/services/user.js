@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 const urlUsers = "http://localhost:8000/api/users/";
 
 export const createUser = async (data) => {
@@ -17,6 +18,8 @@ export const loginUser = async (data) => {
     const userLogged = response.data;
     return userLogged;
   } catch (e) {
+    const message = e?.response?.data?.message || "Error al iniciar sesión";
+    toast.error(message);
     throw e.response;
   }
 };

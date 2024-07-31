@@ -2,10 +2,6 @@
 import * as yup from "yup";
 import {
   Button,
-  Checkbox,
-  FormControl,
-  FormLabel,
-  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -23,35 +19,29 @@ import ContainerComponent from "../../container/ContainerComponent";
 // hooks
 import useSubmitForm from "../../../hooks/user/onSubmit";
 import { useEffect, useState } from "react";
-import { createdProduct, deleteProduct, getProducto, updateProduct } from "../../../services/producto";
+import { activarUsuario, getUsuario, inactivarUsuario } from "../../../services/usuarios";
 
 const schema = yup
   .object({
-    nombre: yup.string().required("El nombre del producto es requerido"),
-    precio: yup.string().required("El precio es requerido"),
-    stockactual: yup.string().required("El stock es requerido"),
+    nombre_opcion: yup.string().required("El nombre del menú es requerido"),
+    link: yup.string().required("Link es requerido"),
   })
   .required();
 
 const formData = [
   {
     type: "text",
-    name: "nombre",
-    label: "Nombre Producto",
+    name: "nombre_opcion",
+    label: "Nombre menú",
   },
   {
     type: "text",
-    name: "precio",
-    label: "Precio",
-  },
-  {
-    type: "number",
-    name: "stockactual",
-    label: "Ingreso del stock",
+    name: "link",
+    label: "Enlace del menú",
   },
 ];
 
-function ProductoForm() {
+function UsuarioForm() {
   // state
   const [data, setData] = useState([]);
   const [isUpdate, setisUpdate] = useState(false);
@@ -59,21 +49,28 @@ function ProductoForm() {
 
   // fomrs
   const { error, onSubmit } = useSubmitForm(
-    !isUpdate ? createdProduct : updateProduct
+    !isUpdate ? createdMenu : updateMenu
   );
 
   // modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const getResponse = async () => {
-    const date = await getProducto();
+    const date = await getUsuario();
     setData(date);
   };
 
+  // check box fucntions
+  const [checkboxValues, setCheckboxValues] = useState({
+    myCheckbox: false,
+    myCheckbox2: false,
+  });
 
   const handleFormSubmit = async (dataForm) => {
     const formDataToSend = {
       ...dataForm,
+      admin: checkboxValues["1"], // Usar "1" como nombre de checkbox
+      vendedor: checkboxValues["2"], // Usar "2" como nombre de checkbox
     };
 
     isUpdate
@@ -81,11 +78,19 @@ function ProductoForm() {
       : await onSubmit(formDataToSend);
     getResponse();
     onClose();
-    
+    setCheckboxValues({
+      myCheckbox: false,
+      myCheckbox2: false,
+    });
   };
 
   const handleDelete = async (id) => {
-    await deleteProduct(id);
+    await inactivarUsuario(id);
+    getResponse();
+  };
+
+  const handleActive = async (id) => {
+    await activarUsuario(id);
     getResponse();
   };
 
@@ -94,6 +99,14 @@ function ProductoForm() {
     getResponse();
   }, []);
 
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+
+    setCheckboxValues({
+      ...checkboxValues,
+      [name]: checked,
+    });
+  };
   const columns = [
     {
       Header: " ",
@@ -103,20 +116,25 @@ function ProductoForm() {
           accessor: "id",
         },
         {
-          Header: "Nombre",
-          accessor: "nombre",
+          Header: "Nombre de usuario",
+          accessor: "username",
         },
         {
-          Header: "Precio",
-          accessor: "precio",
+          Header: "Nombres",
+          accessor: (value) => {
+            const fullName = value?.first_name + " " + value?.last_name;
+            return fullName.trim() || "Sin nombre";x
+          }
         },
         {
-          Header: "Stock Actual",
-          accessor: "stockactual",
+          Header: "Correo",
+          accessor: "email",
         },
         {
-          Header: "Stock Incial",
-          accessor: "stockinicial",
+          Header: "Activo",
+          accessor: (value) => {
+            return value.active ? "Activo" : "Inactivo";
+          }
         },
         {
           Header: "Acciones",
@@ -125,23 +143,12 @@ function ProductoForm() {
               <>
                 <Button
                   onClick={() => {
-                    setIdMenu(data.id);
-                    onOpen();
-                    setisUpdate(true);
+                    !data?.active ? handleActive(data.id) : handleDelete(data.id);
                   }}
-                  bgColor={"yellow.300"}
-                  mr={2}
-                >
-                  Editar
-                </Button>
-                <Button
-                  onClick={() => {
-                    handleDelete(data.id);
-                  }}
-                  bgColor={"red.300"}
+                  bgColor={!data?.active ? "green.300" : "red.300"}
                   color={"white"}
                 >
-                  Eliminar
+                  {!data?.active ? "Activar Usuario" : "Inactivar Usuario"}
                 </Button>
               </>
             );
@@ -154,10 +161,11 @@ function ProductoForm() {
   return (
     <>
       <ContainerComponent
-        title="Administrar Productos"
-        textButton="Agregar producto"
+        title="Administrar usuarios"
+        textButton="Agregar Menú"
         data={data}
         columns={columns}
+        hiddenCreate
         form={{
           formData,
           schema,
@@ -165,7 +173,7 @@ function ProductoForm() {
           handleFormSubmit,
         }}
         modal={{
-          title: isUpdate == true ? "Actualizar Producto" : "Agregar Producto",
+          title: isUpdate == true ? "Actualizar Usuario" : "Agregar Usuario",
           isOpen,
           onOpen,
           onClose,
@@ -176,4 +184,4 @@ function ProductoForm() {
   );
 }
 
-export default ProductoForm;
+export default UsuarioForm;

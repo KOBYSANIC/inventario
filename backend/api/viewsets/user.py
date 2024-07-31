@@ -26,6 +26,38 @@ class UserViewset(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    # inactivate user
+    @action(detail=True, methods=['put'], permission_classes=[AllowAny])
+    def inactivate_user(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.active = False
+            user_profile.save()
+            return Response({"message": "Usuario desactivado exitosamente"}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"message": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        except UserProfile.DoesNotExist:
+            return Response({"message": "Perfil de usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    # activate user
+    @action(detail=True, methods=['put'], permission_classes=[AllowAny])
+    def activate_user(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.active = True
+            user_profile.save()
+            return Response({"message": "Usuario activado exitosamente"}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"message": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        except UserProfile.DoesNotExist:
+            return Response({"message": "Perfil de usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     @action(detail=False, methods=['post'], authentication_classes=[], permission_classes=[AllowAny])
     def create_user(self, request):
         serializer = UserSerializer(data=request.data)
@@ -33,7 +65,6 @@ class UserViewset(viewsets.ModelViewSet):
         if serializer.is_valid():
             # Obtén los datos del usuario del serializer
             user_data = serializer.validated_data
-            
             # Crea un nuevo usuario, pero NO guardes la contraseña en texto plano
             user = User(
                 username=user_data['username'],
@@ -48,13 +79,14 @@ class UserViewset(viewsets.ModelViewSet):
 
             # Genera un token
             token, _ = Token.objects.get_or_create(user=user)
-            
+
             # Inicia sesión al usuario
             login(request, user)
 
             create_user_profile = UserProfile.objects.create(
                 user=user,
-                reference_rol_id=rol_user
+                reference_rol_id=rol_user,
+                active=True
             )
 
             user_role = UserProfile.objects.filter(user=user).values('reference_rol__nombre_rol')
@@ -86,7 +118,12 @@ class UserViewset(viewsets.ModelViewSet):
 
         user = authenticate(request, username=username, password=password)
 
-        user_role = UserProfile.objects.filter(user=user).values('reference_rol__nombre_rol')
+        user_role = UserProfile.objects.filter(user=user).values('reference_rol__nombre_rol', 'active')
+
+        if user_role[0].get('active') == False:
+            return Response({
+                "message": "Su cuenta ha sido desactivada, por favor contacte al administrador"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user_role = user_role[0].get('reference_rol__nombre_rol')
